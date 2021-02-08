@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <avr/interrupt.h>
 
-//Glyphs..
+//Glyphs
 char
     ethConn[8] = { 0x00, 0xe0, 0x1b, 0x11, 0x11, 0x1f, 0x00, 0x00 },
       enter[8] = { 0x01, 0x01, 0x05, 0x0D, 0x1F, 0x0C, 0x04, 0x00 },
@@ -13,10 +13,18 @@ char
 	upArrow[8] = { 0x00, 0x04, 0x04, 0x0E, 0x0E, 0x1F, 0x00, 0x00 },
   downArrow[8] = { 0x00, 0x00, 0x1F, 0x0E, 0x0E, 0x04, 0x04, 0x00 };
 
+enum States
+{
+	Init,
+	ScreenIpMode,
+	ScreenSetIp,
+	ScreenStats,
+	ScreenDirect
+};
+
 
 int main(void)
 {
-	//important contribution
 	DDRA = 0xff;
 	PORTA = 0;
 	
@@ -47,12 +55,24 @@ int main(void)
 			
 			switch(pingCurr)
 			{
-				case 0x10: ledSet(LED_SCR_MODE, ON); break;
-				case 0x08: ledSet(LED_SCR_SET,  ON); break;
-				case 0x04: ledSet(LED_SCR_STAT, ON); break;
-				case 0x02: ledSet(LED_SCR_DRCT, ON); break;
-				case 0x01: ledTrigger(LED_BLACKOUT); break;
-				default: break;
+				case 0x10:
+					ledSet(LED_SCR_MODE, ON);
+					
+					break;
+				case 0x08:
+					ledSet(LED_SCR_SET,  ON);
+					break;
+				case 0x04:
+					ledSet(LED_SCR_STAT, ON);
+					break;
+				case 0x02:
+					ledSet(LED_SCR_DRCT, ON);
+					break;
+				case 0x01:
+					ledTrigger(LED_BLACKOUT);
+					break;
+				default:
+					break;
 			}
 		}
 		
