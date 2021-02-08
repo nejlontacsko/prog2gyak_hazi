@@ -18,10 +18,16 @@
 #define ON 1
 #define OFF 0
 
-void led(int id, int val);
+void ledSet(int id, int val);
+
+void ledTrigger(int id);
 
 void ledTest();
 
-void ledInit();
+void ledInit(char);
+
+void ledClearUniqueArea();
+
+//extern char ledUniqueMask;
 
 #endif

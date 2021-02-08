@@ -120,7 +120,7 @@ void lcdPrint(const char* str, int row)
 		lcdSendByte(*str);
 		str++;
 		i++;
-		_delay_ms(35);
+		//_delay_ms(35);
 	}
 }
 

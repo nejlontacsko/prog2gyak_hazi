@@ -21,7 +21,7 @@ int main(void)
 	PORTA = 0;
 	
 	lcdInit();
-	ledInit();
+	ledInit(0x3e);
 	
 	Static_Limit(5);
 	Static_CustomChar(7, enter);
@@ -33,18 +33,30 @@ int main(void)
 	char buf[17];
 	memset(buf, 0, 17);
 	
-	char ping_prev = 0, ping_curr;
+	char pingPrev = 0, pingCurr;
 	
 	while (1) 
     {
-		ping_curr = PING;
-		if (ping_curr != ping_prev)
+		pingCurr = PING;
+		if (pingCurr != pingPrev)
 		{
-			sprintf(buf, "PORTG: 0x%02x", PING);
+			sprintf(buf, "PING: 0x%02x", PING);
 			lcdPrint(buf, 0);
+			sprintf(buf, "PORTleds: 0x%02x", (PIND & 0xf0) | (PINB >> 4));
+			lcdPrint(buf, 1);
+			
+			switch(pingCurr)
+			{
+				case 0x10: ledSet(LED_SCR_MODE, ON); break;
+				case 0x08: ledSet(LED_SCR_SET,  ON); break;
+				case 0x04: ledSet(LED_SCR_STAT, ON); break;
+				case 0x02: ledSet(LED_SCR_DRCT, ON); break;
+				case 0x01: ledTrigger(LED_BLACKOUT); break;
+				default: break;
+			}
 		}
 		
-		ping_prev = ping_curr;
+		pingPrev = pingCurr;
 		
 		/*lcdSendCmd(LCD_CMD_RETHOME);
 		lcdSendCmd(LCD_CMD_DDRAMAD + 0x5f);
