@@ -16,6 +16,7 @@ char
 
 int main(void)
 {
+	//important contribution
 	DDRA = 0xff;
 	PORTA = 0;
 	
