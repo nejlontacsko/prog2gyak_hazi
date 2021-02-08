@@ -13,18 +13,20 @@ char
 	upArrow[8] = { 0x00, 0x04, 0x04, 0x0E, 0x0E, 0x1F, 0x00, 0x00 },
   downArrow[8] = { 0x00, 0x00, 0x1F, 0x0E, 0x0E, 0x04, 0x04, 0x00 };
 
-enum States
+typedef enum state
 {
 	Init,
 	ScreenIpMode,
 	ScreenSetIp,
 	ScreenStats,
 	ScreenDirect
-};
+} State;
 
 
 int main(void)
 {
+	State currentState = Init, nextState = ScreenStats;
+	
 	DDRA = 0xff;
 	PORTA = 0;
 	
@@ -42,31 +44,34 @@ int main(void)
 	memset(buf, 0, 17);
 	
 	char pingPrev = 0, pingCurr;
-	
+
 	while (1) 
     {
 		pingCurr = PING;
-		if (pingCurr != pingPrev)
+		if ((pingCurr != pingPrev && pingCurr > 0) || currentState == Init)
 		{
-			sprintf(buf, "PING: 0x%02x", PING);
+			/*sprintf(buf, "PING: 0x%02x", PING);
 			lcdPrint(buf, 0);
 			sprintf(buf, "PORTleds: 0x%02x", (PIND & 0xf0) | (PINB >> 4));
-			lcdPrint(buf, 1);
+			lcdPrint(buf, 1);*/
 			
 			switch(pingCurr)
 			{
 				case 0x10:
 					ledSet(LED_SCR_MODE, ON);
-					
+					nextState = (currentState != ScreenIpMode) ? ScreenIpMode : ScreenStats;
 					break;
 				case 0x08:
 					ledSet(LED_SCR_SET,  ON);
+					nextState = (currentState != ScreenSetIp) ? ScreenSetIp : ScreenStats;
 					break;
 				case 0x04:
-					ledSet(LED_SCR_STAT, ON);
+					/*ledSet(LED_SCR_STAT, ON);
+					nextState = ScreenStats;*/
 					break;
 				case 0x02:
 					ledSet(LED_SCR_DRCT, ON);
+					nextState = (currentState != ScreenDirect) ? ScreenDirect : ScreenStats;
 					break;
 				case 0x01:
 					ledTrigger(LED_BLACKOUT);
@@ -74,9 +79,35 @@ int main(void)
 				default:
 					break;
 			}
+			
+			currentState = nextState;
+			
+				switch (currentState)
+				{
+					case ScreenStats:
+						lcdPrintHun(LCD_EMPTY_LINE, "  Statisztikák  ", "    képernyõ", LCD_EMPTY_LINE);
+						break;
+					case ScreenIpMode:
+						lcdPrintHun(LCD_EMPTY_LINE, "   IP üzemmód   ", "    képernyõ", LCD_EMPTY_LINE);
+						break;
+					case ScreenSetIp:
+						lcdPrintHun(LCD_EMPTY_LINE, "  Cím beállító  ", "    képernyõ", LCD_EMPTY_LINE);
+						break;
+					case ScreenDirect:
+						lcdPrintHun(LCD_EMPTY_LINE, "   DMX direkt   ", "    képernyõ", LCD_EMPTY_LINE);
+						break;
+					default:
+						break;
+				}
+			
 		}
 		
 		pingPrev = pingCurr;
+		
+		//
+		//{
+			
+		//}
 		
 		/*lcdSendCmd(LCD_CMD_RETHOME);
 		lcdSendCmd(LCD_CMD_DDRAMAD + 0x5f);

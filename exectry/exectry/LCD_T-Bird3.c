@@ -163,7 +163,7 @@ int lcdPrintHun(const char* line0, const char* line1, const char* line2, const c
 	STRCATL(concat, bufsrtcatl, line2, 16);
 	STRCATL(concat, bufsrtcatl, line3, 16);
 	
-	lcdSendCmd(LCD_CMD_RETHOME);
+	Static_Clear();
 	lcdSendCmd(LCD_CMD_DDRAMAD + 0x28);
 	
 	for (int i = 0; concat[i] != 0; i++)
