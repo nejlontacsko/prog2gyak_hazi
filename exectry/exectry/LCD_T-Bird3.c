@@ -120,7 +120,6 @@ void lcdPrint(const char* str, int row)
 		lcdSendByte(*str);
 		str++;
 		i++;
-		//_delay_ms(35);
 	}
 }
 
@@ -132,7 +131,7 @@ int lcdPrintHun(const char* line0, const char* line1, const char* line2, const c
 		0xda, 0xdb, 0xdc,	//Ú, Û, Ü,
 		0xe1, 0xe9, 0xed,	//á, é, í,
 		0xf3, 0xf5, 0xf6,	//ó, õ, ö,
-		0xfa, 0xfb, 0xfc,   //ú, û, ü
+		0xfa, 0xfb, 0xfc,	//ú, û, ü
 		0x00};
 	
 	char* replacement[19] = {
