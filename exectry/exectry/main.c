@@ -1,5 +1,7 @@
 #include "LCD_T-Bird3.h"
 #include "leds.h"
+#include "buttonHandler.h"
+#include "matrix.h"
 
 #include <stdio.h>
 #include <avr/interrupt.h>
@@ -22,7 +24,7 @@ int main(void)
 	
 	lcdInit();
 	ledInit();
-	
+	matrixInit();
 	Static_Limit(5);
 	Static_CustomChar(7, enter);
 	Static_Clear();	
@@ -41,6 +43,7 @@ int main(void)
 		if (ping_curr != ping_prev)
 		{
 			sprintf(buf, "PORTG: 0x%02x", PING);
+			driver(PING);
 			lcdPrint(buf, 0);
 		}
 		

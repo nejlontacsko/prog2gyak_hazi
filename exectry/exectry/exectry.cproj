@@ -120,6 +120,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="buttonHandler.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="buttonHandler.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="LCD_T-Bird3.c">
       <SubType>compile</SubType>
     </Compile>
@@ -133,6 +139,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="matrix.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="matrix.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="utils.c">

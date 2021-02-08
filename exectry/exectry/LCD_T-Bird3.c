@@ -89,11 +89,12 @@ void lcdInit()
 	lcdSendCmd(LCD_CMD_CLRDISP);
 	lcdSendCmd(LCD_CMD_ENTMODE | 2);
 	lcdSendCmd(LCD_CMD_RETHOME);
-	
+	/*
 	lcdPrintHun("  T-Bird alapú", "ArtNetv4+SLLCPv1", "   csomópont", ">> Betöltés...");
 	_delay_ms(500);
 	lcdPrintHun("     T-Bird     ", "    firmware    ", "  verzió v1.0", ">> Betöltés...");
 	_delay_ms(200);
+	*/
 }
 
 void lcdCreateChar(uint8_t location, char charmap[])

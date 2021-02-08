@@ -20,4 +20,8 @@ int _findChar(char*, char);
 
 int _findInt(int*, int, int);
 
+typedef struct ipAddress{
+	char ip[4];
+} ipAddress;
+
 #endif
