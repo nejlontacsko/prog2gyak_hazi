@@ -5,7 +5,11 @@ char ledUniqueMask = 0;
 void ledSet(int id, int val)
 {
 	if (id > 1 && id < _BV(6))
+<<<<<<< HEAD
 	ledClearUniqueArea();
+=======
+		ledClearUniqueArea();
+>>>>>>> 82d01f5947e4b5df1b89b5d8faccdb78b623c15b
 	if (val)
 	if (id & 0xf0)
 	PORTD |= id;
@@ -16,6 +20,13 @@ void ledSet(int id, int val)
 	PORTD &= ~id;
 	else
 	PORTB &= ~(id << 4);
+}
+
+void ledTrigger(int id)
+{
+	char pv = (PIND & 0xf0) | (PINB >> 4);
+	
+	ledSet(id, !(pv & id));
 }
 
 void ledTrigger(int id)

@@ -130,9 +130,15 @@ int lcdPrintHun(const char* line0, const char* line1, const char* line2, const c
 		0xd3, 0xd5, 0xd6,	//Ó, ?, Ö,
 		0xda, 0xdb, 0xdc,	//Ú, ?, Ü,
 		0xe1, 0xe9, 0xed,	//á, é, í,
+<<<<<<< HEAD:exectry/exectry/lcd.c
 		0xf3, 0xf5, 0xf6,	//ó, ?, ö,
 		0xfa, 0xfb, 0xfc,	//ú, ?, ü
 	0x00};
+=======
+		0xf3, 0xf5, 0xf6,	//ó, õ, ö,
+		0xfa, 0xfb, 0xfc,	//ú, û, ü
+		0x00};
+>>>>>>> 82d01f5947e4b5df1b89b5d8faccdb78b623c15b:exectry/exectry/LCD_T-Bird3.c
 	
 	char* replacement[19] = {
 		upperAA, upperEE, upperII,
