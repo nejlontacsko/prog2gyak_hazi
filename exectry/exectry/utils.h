@@ -21,7 +21,9 @@ int _findChar(char*, char);
 int _findInt(int*, int, int);
 
 typedef struct ipAddress{
-	char ip[4];
+	unsigned char ip[4];
 } ipAddress;
+
+void iptoString(ipAddress ip,char* output,char beingSet);
 
 #endif

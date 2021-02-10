@@ -1,26 +1,37 @@
 #include "leds.h"
 
-void led(int id, int val)
+char ledUniqueMask = 0;
+
+void ledSet(int id, int val)
 {
+	if (id > 1 && id < _BV(6))
+	ledClearUniqueArea();
 	if (val)
-		if (id & 0xf0)
-			PORTD |= id;
-		else
-			PORTB |= id << 4;
+	if (id & 0xf0)
+	PORTD |= id;
 	else
-		if (id & 0xf0)
-			PORTD &= ~id;
-		else
-			PORTB &= ~(id << 4);
+	PORTB |= id << 4;
+	else
+	if (id & 0xf0)
+	PORTD &= ~id;
+	else
+	PORTB &= ~(id << 4);
+}
+
+void ledTrigger(int id)
+{
+	char pv = (PIND & 0xf0) | (PINB >> 4);
+	
+	ledSet(id, !(pv & id));
 }
 
 void ledTest()
 {
 	for (int i = 1; i < 256; i <<= 1)
 	{
-		led(i, ON);
+		ledSet(i, ON);
 		_delay_ms(200);
-		led(i, OFF);
+		ledSet(i, OFF);
 		_delay_ms(50);
 	}
 	PORTD |= 0xf0;
@@ -30,9 +41,16 @@ void ledTest()
 	PORTB &= ~0xf0;
 }
 
-void ledInit()
+void ledInit(char uniqueMask)
 {
 	DDRD |= 0xf0;
 	DDRB |= 0xf0;
 	ledTest();
+	ledUniqueMask = uniqueMask;
+}
+
+void ledClearUniqueArea()
+{
+	PORTD &= ~(ledUniqueMask & 0xf0);
+	PORTB &= ~((ledUniqueMask & 0x0f) << 4);
 }

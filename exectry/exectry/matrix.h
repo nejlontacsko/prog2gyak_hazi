@@ -11,8 +11,9 @@
 #include <avr/io.h>
 void matrix();
 void matrixInit();
-void segEnable(int state);
-void segDigit(uint8_t digit, uint8_t val);
+void ipInputMode(int state);
+void matrixProcess(int op);
 void write7seg(char number);
+void printIps();
 
 #endif /* MATRIX_H_ */

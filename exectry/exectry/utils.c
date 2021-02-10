@@ -23,3 +23,10 @@ int _findInt(int* haystack, int needle, int len)
 		}
 	return ret;
 }
+
+void iptoString(ipAddress ip,char* output,char beingSet){
+	char setchar=' ';
+	if(beingSet)
+	setchar='>';
+	sprintf(output,"%c%d.%d.%d.%d",setchar,ip.ip[0],ip.ip[1],ip.ip[2],ip.ip[3]);
+}
