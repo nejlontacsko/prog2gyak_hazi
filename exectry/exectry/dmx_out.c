@@ -28,7 +28,7 @@ void dmxStartTransmit()
 	//data (8N2, 250000baud)
 	UCSR1C = 0x0e;
 	UBRR1H = 0;
-	UBRR1L = 0x03;
+	UBRR1L = 0x03; //8MHz: 0x03; 16MHz: 0x07
 	
 	//ZERO Start Code
 	dmxSendByte(0x00);
